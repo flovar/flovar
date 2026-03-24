@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>instruction.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({ tex2jax: {inlineMath: [['$', '$']]}, messageStyle: "none" });
+</script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="vsf-variably-saturated-zone-water-flux-estimation-based-on-temperature-data">VSF: Variably Saturated Zone Water Flux Estimation Based on Temperature Data</h1>
+<h2 id="introduction">Introduction</h2>
+<p>VSF is a Python package for estimating water and vapor fluxes in variably saturated zone based on temperature data. Detailed information can be found in the following paper:</p>
+<blockquote>
+<p>Meng Su, Rui Ma, Yunquan Wang, Ziyong Sun, Maosheng Yin, Mengyan Ge. Tracing the soil water flux in variably saturated zones using temperature data. (Under review in Water Resources Research)</p>
+</blockquote>
+<h2 id="requirements">Requirements</h2>
+<p>Recent versions of the following packages for Python 3.8+ are required:</p>
+<ul>
+<li>NumPy 1.20+</li>
+<li>SciPy 1.10+</li>
+<li>Pandas 1.2+</li>
+<li>optimparallel 0.1.2</li>
+<li>pyswarms 1.3.0</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<h3 id="quickstart">Quickstart</h3>
+<ol>
+<li>Prepare the csv data file. Four data series are required for VSF. The first through third columns are temperatures monitored by the sensor (numbered 1) at the depth of interest and two sensors (numbered 0 and 2) above and below the depth of interest, the fourth column is measured volumetric water content (VWC, $\theta$) which depth can be specified with <code>--depth_vwc</code> option.</li>
+<li>Run the following command in terminal:</li>
+</ol>
+<pre class="hljs"><code><div>python3 main.py &lt;path to csv data file&gt; &lt;depth of sensor 1 and 2 relative to sensor 0 <span class="hljs-keyword">in</span> meters&gt; &lt;time duration between two data records <span class="hljs-keyword">in</span> seconds&gt; --cp &lt;heat capacity of moist soil&gt;
+</div></code></pre>
+<ol start="3">
+<li>The output file is a compressed <code>.npz</code> archive, which contains the following optimized parameters:</li>
+</ol>
+<ul>
+<li><code>lambdas</code>: $\lambda$ at each discretized nodes, in $Js^{-1}m^{-1} {}^\circ C^{-1}$</li>
+<li><code>flux</code>: Liquid water flux, in $m/s$</li>
+<li><code>vflux</code>: Vapor flux, in $m/s$</li>
+</ul>
+<h3 id="command-line-interface-options">Command Line Interface Options</h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+<th>Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td>Path to csv data file</td>
+<td>None</td>
+<td>--</td>
+</tr>
+<tr>
+<td><code>depth</code></td>
+<td>Depth of sensor 1 and 2 relative to sensor 0</td>
+<td>None</td>
+<td>$m$</td>
+</tr>
+<tr>
+<td><code>dt</code></td>
+<td>Time interval between two adjacent records</td>
+<td>1800</td>
+<td>$s$</td>
+</tr>
+<tr>
+<td><code>--output</code></td>
+<td>Path to output file</td>
+<td>out.npz</td>
+<td>--</td>
+</tr>
+<tr>
+<td><code>--freq</code></td>
+<td>Number of data records used in every stress period, can be omitted if using all data as a single stress period</td>
+<td>0</td>
+<td>--</td>
+</tr>
+<tr>
+<td><code>--depth_vwc</code></td>
+<td>Depth of VWC sensor relative to sensor 0, can be omitted if temperature and VWC sensors are at the same depth</td>
+<td>-1</td>
+<td>$m$</td>
+</tr>
+<tr>
+<td><code>--dx</code></td>
+<td>Spatial step size</td>
+<td>0.05</td>
+<td>$m$</td>
+</tr>
+<tr>
+<td><code>--cw</code></td>
+<td>Heat capacity of water</td>
+<td>4.2e6</td>
+<td>$Jm^{-3} {}^\circ C^{-1}$</td>
+</tr>
+<tr>
+<td><code>--cv</code></td>
+<td>Heat capacity of vapor</td>
+<td>100</td>
+<td>$Jm^{-3} {}^\circ C^{-1}$</td>
+</tr>
+<tr>
+<td><code>--cs</code></td>
+<td>Heat capacity of solid</td>
+<td>3.6e6</td>
+<td>$Jm^{-3} {}^\circ C^{-1}$</td>
+</tr>
+<tr>
+<td><code>--solid_frac</code></td>
+<td>Volumetric fraction of solid phase to calculate heat capacity of moist soil</td>
+<td>-1</td>
+<td>--</td>
+</tr>
+<tr>
+<td><code>--cp</code></td>
+<td>Heat capacity of moist soil, can be omitted if using computed result of Cw, Cv and Cs</td>
+<td>-1</td>
+<td>$Js^{-1}m^{-3} {}^\circ C^{-1}$</td>
+</tr>
+<tr>
+<td><code>--theta_coef_preset</code></td>
+<td>Using preset regression coefficients of Chung and Horton's empirical eauation (1987) (Available: 0~2)</td>
+<td>0</td>
+<td>--</td>
+</tr>
+<tr>
+<td><code>--theta_coef_custom</code></td>
+<td>Using custom regression coefficients of Chung and Horton's empirical eauation (1987)</td>
+<td>None</td>
+<td>--</td>
+</tr>
+<tr>
+<td><code>--optim</code></td>
+<td>Optimization algorithm (Available: &quot;bfgs&quot;, &quot;pso&quot;, &quot;nelder-mead&quot;, &quot;tnc&quot;, &quot;slsqp&quot;, &quot;powell&quot;)</td>
+<td>bfgs</td>
+<td>--</td>
+</tr>
+<tr>
+<td><code>--n_processes</code></td>
+<td>Number of processes used in parallel, only meaningful to L-BFGS-G and PSO algorithm</td>
+<td>6</td>
+<td>--</td>
+</tr>
+<tr>
+<td><code>--lambda_lb</code></td>
+<td>Lower bound of thermal conductivity</td>
+<td>0.5</td>
+<td>$Js^{-1}m^{-1} {}^\circ C^{-1}$</td>
+</tr>
+<tr>
+<td><code>--lambda_ub</code></td>
+<td>Upper bound of thermal conductivity</td>
+<td>3</td>
+<td>$Js^{-1}m^{-1} {}^\circ C^{-1}$</td>
+</tr>
+<tr>
+<td><code>--flux_lb</code></td>
+<td>Lower bound of water flux</td>
+<td>-2e-06</td>
+<td>$m/s$</td>
+</tr>
+<tr>
+<td><code>--flux_ub</code></td>
+<td>Upper bound of water flux</td>
+<td>2e-06</td>
+<td>$m/s$</td>
+</tr>
+<tr>
+<td><code>--loss_coef</code></td>
+<td>Weighting coefficients of loss function</td>
+<td>[0.7, 0.2, 0.1]</td>
+<td>--</td>
+</tr>
+<tr>
+<td><code>--seed</code></td>
+<td>Random seed</td>
+<td>42</td>
+<td>--</td>
+</tr>
+<tr>
+<td><code>--filter_outputs</code></td>
+<td>Passing optimization outputs through a Butterworth filter to remove outliers</td>
+<td>False</td>
+<td>--</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Preset regression coefficients of Chung and Horton's empirical eauation (1987)</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>No.</th>
+<th><code>b1</code></th>
+<th><code>b2</code></th>
+<th><code>b3</code></th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>-0.197</td>
+<td>-0.962</td>
+<td>2.521</td>
+<td>Clay</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.243</td>
+<td>0.393</td>
+<td>1.534</td>
+<td>Loam</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.228</td>
+<td>-2.406</td>
+<td>4.909</td>
+<td>Sand</td>
+</tr>
+</tbody>
+</table>
+<h3 id="examples">Examples</h3>
+<p>In this section, three examples are presented to help users be familiar with VSF package.</p>
+<p>Examples 1, 2 and 3 shared the same following conditions in the data csv file named as <code>data.csv</code>: the distance of sensor 1 (at the depth of interest) and sensor 2 (below the depth of interest) relative to sensor 0 (above the depth of interest) are $0.25$ and $0.5m$, respectively; and the time interval between two adjacent data records is 1800s.</p>
+<blockquote>
+<p>Example 1: Using all data to form a single stress period with predefined heat capacity of moist soil ($C_p$, <code>-–cp</code> in options) $2.5×10^6 Jm^{-3} ℃^{-1}$. Note that if the length of the data records is very large, the data records length could be divided into several stress periods. Parameter estimation would be conducted for each stress period, and the estimated results from the former stress period would be used as the initial parameter values for the next stress period. Example 1 is the simplest application of VSF package with the following command:</p>
+</blockquote>
+<pre class="hljs"><code><div>python3 main.py data.csv 0.25 0.5 1800 --cp 2.5e6
+</div></code></pre>
+<blockquote>
+<p>Example 2: Considering that the data records period may be very long that experiences different flow conditions in some applications, the whole period can be divided into several stress periods. Here, each stress period has a length of 1 day, which covers $48$ data records (<code>--freq 48</code>); the total simulation time can cover arbitrarily days and will be automatically divided into several stress periods by VSF package. In this example, we illustrated the alternative method for calculating the heat capacity of moist soil ($C_p=C_n θ_n+C_w θ + C_v (1-θ_n-θ)$), based on the default heat capacity of solid ($C_n$), water ($C_w$) and vapor ($C_v$), and customized ($0.55$) volumetric fraction of solid phase ($θ_n$, <code>--solid_frac</code> in options), instead of directly assigning the value. Then the command for Example 2 is as follows,</p>
+</blockquote>
+<pre class="hljs"><code><div>python3 main.py data.csv 0.25 0.5 1800 --freq 48 --solid_frac 0.55
+</div></code></pre>
+<blockquote>
+<p>Example 3: Compared with other two examples, Example 3 provide more customized options.</p>
+<ul>
+<li>Setting spatial step size (<code>--dx</code>) to $0.01m$, heat capacity of water (<code>--cw</code>) to $3.6 \times 10^6~Jm^{-3} {}^\circ C^{-1}$, heat capacity of vapor (<code>--cv</code>) to $90~Jm^{-3} {}^\circ C^{-1}$, heat capacity of moist soil to $2.8 \times 10^6~Jm^{-3} {}^\circ C^{-1}$, regression coefficients of Chung and Horton's empirical eauation (1987) <code>b1</code> to $-0.24$, <code>b2</code> to $-0.4$, <code>b3</code> to $1.5$.</li>
+<li>Using truncated Newton algorithm (TNC) as optimization method (<code>--optim tnc</code>), adjusting weighting coefficients of loss function to $0.9, 0.05, 0.05$.</li>
+<li>Setting <code>random</code> module and NumPy random seed to 9000, using Butterworth filter to remove optimized flux outliers</li>
+</ul>
+</blockquote>
+<pre class="hljs"><code><div>python3 main.py data.csv 0.25 0.5 1800 --freq 48 --dx 0.01 --cw 3.6e6 --cv 90 --cp 2.8e6 --theta_coef_custom -0.24 0.4 1.5 --optim tnc --loss_coef 0.9 0.05 0.05 --seed 9000 --filter_outputs
+</div></code></pre>
+
+</body>
+</html>
